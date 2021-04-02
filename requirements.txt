@@ -1,0 +1,2 @@
+pytest
+pillow>=4.3.0
