@@ -18,8 +18,9 @@ class PushButton(TextWidget):
         visible=True,
         enabled=None,
         width=None,
-        height=None):
-        borderwidth = None
+        height=None,
+        borderwidth = None):
+
         """
         Creates a PushButton
 
