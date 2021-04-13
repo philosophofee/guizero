@@ -72,6 +72,9 @@ class PushButton(TextWidget):
         :param int height:
             The starting height of the widget. Defaults to `None` and will auto
             size.
+        :param int borderwidth:
+            The starting border width of the widget. Defaults to 'None' and
+            will auto size.
         """
 
         self._value = 0
