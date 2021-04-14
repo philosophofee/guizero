@@ -7,7 +7,7 @@ from .Window import Window
 
 class MenuBar(Component):
 
-    def __init__(self, master, toplevel, options):
+    def __init__(self, master, menudict):
 
         """
         Creates a MenuBar
@@ -15,21 +15,19 @@ class MenuBar(Component):
         :param Container master:
             The Container (App, Box, etc) the MenuBar will belong too.
 
-        :param List toplevel:
-            A list of strings to populate the top level menu options.
-
-        :param List options:
-            A 3D list of:
-                - submenus,
-                - with each submenu being a list of options
-                - and each option being a text/command pair 
-
+        :param Dict menudict
+            A dictionary that contains all of the menus and their sub-menus
             e.g ::
-
-                options=[
-                        [ ["File option 1", file_function], ["File option 2", file_function] ],
-                        [ ["Edit option 1", edit_function], ["Edit option 2", edit_function] ]
-                    ]
+                  {
+                      "foo": {
+                          "foo1": callback,
+                          "foo2": callback
+                      },
+                      "bar": {
+                          "bar1": callback,
+                          "bar2": callback
+                      }
+                  }
         """
 
         if not isinstance(master, (App, Window)):
@@ -44,19 +42,21 @@ class MenuBar(Component):
         self._sub_menus = []
 
         # Create all the top level menus
-        for i in range(len(toplevel)):
+        i = 0
+        for menu_item in menudict:
             # Create this submenu
             new_menu = Menu(self.tk, tearoff=0)
 
             # Populate the drop down menu with the items/commands from the list
-            for menu_item in options[i]:
-                new_menu.add_command(label=menu_item[0], command=menu_item[1])
+            for k in menudict[menu_item]:
+                new_menu.add_command(label=k, command=menudict[menu_item].get(k))
 
             # Append to the submenus list
             self._sub_menus.append(new_menu)
 
             # Add to the menu bar
-            self.tk.add_cascade(label=toplevel[i], menu=self._sub_menus[i])
+            self.tk.add_cascade(label=menu_item, menu=self._sub_menus[i])
+            i+=1
 
        	# Set this as the menu for the master object
        	master.tk.config(menu=self.tk)

@@ -13,13 +13,25 @@ def test_initial_values():
     def callback():
         callback_event.set()
 
-    m = MenuBar(
-        a,
-        ["foo", "bar"],
-        [
-            [ ["foo1", callback], ["foo2", callback] ],
-            [ ["bar1", callback], ["bar2", callback] ]
-        ])
+    #m = MenuBar(
+    #    a,
+    #    ["foo", "bar"],
+    #    [
+    #        [ ["foo1", callback], ["foo2", callback] ],
+    #        [ ["bar1", callback], ["bar2", callback] ]
+    #    ])
+
+    m = MenuBar(a,
+                      {
+                          "foo": {
+                              "foo1": callback,
+                              "foo2": callback
+                          },
+                          "bar": {
+                              "bar1": callback,
+                              "bar2": callback
+                          }
+                      })
 
     assert m.master == a
 
