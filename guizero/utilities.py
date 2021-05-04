@@ -6,6 +6,7 @@ except ImportError:
 
 try:
     from PIL import Image, ImageTk
+
     PIL_AVAILABLE = True
 except ImportError:
     PIL_AVAILABLE = False
@@ -15,8 +16,10 @@ from collections.abc import MutableSequence
 
 import sys
 
+
 class GUIZeroException(Exception):
     pass
+
 
 # holds details about the configuration guizero is using
 class SystemConfig():
@@ -78,6 +81,7 @@ class SystemConfig():
 
         """
         return self._tk_options
+
 
 system_config = SystemConfig()
 
@@ -178,7 +182,8 @@ class GUIZeroImage():
 
         except Exception as e:
             error_text = "Image import error - '{}'\n".format(e)
-            error_text += "Check the file path and image type is {}".format("/".join(system_config.supported_image_types))
+            error_text += "Check the file path and image type is {}".format(
+                "/".join(system_config.supported_image_types))
             raise_error(error_text)
 
     def _open_image_source(self):
@@ -360,8 +365,9 @@ class TriggeredList(MutableSequence):
 
 # Lambda-izer for making it easy to pass arguments with function calls
 # without having to know what lambda does
-def with_args( func_name, *args):
+def with_args(func_name, *args):
     return lambda: func_name(*args)
+
 
 # Gets the number of args a function expects
 def no_args_expected(func_name):
@@ -377,12 +383,14 @@ def no_args_expected(func_name):
     else:
         return 0
 
+
 # Format errors in a pretty way
 def error_format(message):
     print("------------------------------------------------------------")
     print("*** GUIZERO WARNING ***")
     print(message)
     print("------------------------------------------------------------")
+
 
 # Raise error in a pretty way
 def raise_error(message):
@@ -392,8 +400,10 @@ def raise_error(message):
     error_message += "------------------------------------------------------------\n"
     raise GUIZeroException(error_message)
 
+
 def deprecated(message):
     print("*** DEPRECATED: " + message)
+
 
 def convert_color(color):
     """
@@ -407,25 +417,28 @@ def convert_color(color):
             # strip the color of white space
             color = color.strip()
 
-            # if it starts with a # check it is a valid color
-            if color[0] == "#":
+            if color == "none":
+                color = "#ffffff"
 
-                # check its format
-                if len(color) != 7:
-                    raise ValueError("{} is not a valid # color, it must be in the format #ffffff.".format(color))
-                else:
-                    # split the color into its hex values
-                    hex_colors = (color[1:3], color[3:5], color[5:7])
+                # if it starts with a # check it is a valid color
+                if color[0] == "#":
 
-                    # check hex values are between 00 and ff
-                    for hex_color in hex_colors:
-                        try:
-                            int_color = int(hex_color, 16)
-                        except:
-                            raise ValueError("{} is not a valid value, it must be hex 00 - ff".format(hex_color))
+                    # check its format
+                    if len(color) != 7:
+                        raise ValueError("{} is not a valid # color, it must be in the format #ffffff.".format(color))
+                    else:
+                        # split the color into its hex values
+                        hex_colors = (color[1:3], color[3:5], color[5:7])
 
-                        if not (0 <= int_color <= 255):
-                            raise ValueError("{} is not a valid color value, it must be 00 - ff".format(hex_color))
+                        # check hex values are between 00 and ff
+                        for hex_color in hex_colors:
+                            try:
+                                int_color = int(hex_color, 16)
+                            except:
+                                raise ValueError("{} is not a valid value, it must be hex 00 - ff".format(hex_color))
+
+                            if not (0 <= int_color <= 255):
+                                raise ValueError("{} is not a valid color value, it must be 00 - ff".format(hex_color))
 
         # if the color is not a string, try and convert it
         else:
