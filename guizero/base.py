@@ -449,6 +449,7 @@ class BaseWindow(Container):
         self.tk.geometry(str(width)+"x"+str(height))
         self._on_close = None
         self._full_screen = False
+        self._icon = None
 
         self.bg = bg
 
@@ -535,6 +536,19 @@ class BaseWindow(Container):
     @when_closed.setter
     def when_closed(self, value):
         self._on_close = value
+
+    @property
+    def icon(self):
+        if self._icon == None:
+            return None
+        else:
+            return self._icon.image_source
+
+    @icon.setter
+    def icon(self, value):
+        # https://www.geeksforgeeks.org/iconphoto-method-in-tkinter-python/
+        self._icon = utils.GUIZeroImage(value, None, None)
+        self.tk.iconphoto(False, self._icon.tk_image)
 
     # METHODS
     # --------------------------------------
