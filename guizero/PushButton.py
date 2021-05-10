@@ -18,8 +18,9 @@ class PushButton(TextWidget):
         visible=True,
         enabled=None,
         width=None,
-        height=None,
-        borderwidth = None):
+        height=None,):
+
+        #borderwidth = None):
 
         """
         Creates a PushButton
@@ -91,7 +92,7 @@ class PushButton(TextWidget):
         self._text.set(text)
         tk = Button(master.tk, textvariable=self._text, command=self._command_callback)
 
-        super(PushButton, self).__init__(master, tk, grid, align, visible, enabled, width, height, borderwidth)
+        super(PushButton, self).__init__(master, tk, grid, align, visible, enabled, width, height)
 
         # Add padding if necessary
         self.tk.config(pady=pady, padx=padx)
