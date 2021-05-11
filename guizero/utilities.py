@@ -417,28 +417,29 @@ def convert_color(color):
             # strip the color of white space
             color = color.strip()
 
+            # is color listed as none, if so make the color white
             if color == "none":
                 color = "#ffffff"
 
-                # if it starts with a # check it is a valid color
-                if color[0] == "#":
+            # if it starts with a # check it is a valid color
+            if color[0] == "#":
 
-                    # check its format
-                    if len(color) != 7:
-                        raise ValueError("{} is not a valid # color, it must be in the format #ffffff.".format(color))
-                    else:
-                        # split the color into its hex values
-                        hex_colors = (color[1:3], color[3:5], color[5:7])
+                # check its format
+                if len(color) != 7:
+                    raise ValueError("{} is not a valid # color, it must be in the format #ffffff.".format(color))
+                else:
+                    # split the color into its hex values
+                    hex_colors = (color[1:3], color[3:5], color[5:7])
 
-                        # check hex values are between 00 and ff
-                        for hex_color in hex_colors:
-                            try:
-                                int_color = int(hex_color, 16)
-                            except:
-                                raise ValueError("{} is not a valid value, it must be hex 00 - ff".format(hex_color))
+                    # check hex values are between 00 and ff
+                    for hex_color in hex_colors:
+                        try:
+                            int_color = int(hex_color, 16)
+                        except:
+                            raise ValueError("{} is not a valid value, it must be hex 00 - ff".format(hex_color))
 
-                            if not (0 <= int_color <= 255):
-                                raise ValueError("{} is not a valid color value, it must be 00 - ff".format(hex_color))
+                        if not (0 <= int_color <= 255):
+                            raise ValueError("{} is not a valid color value, it must be 00 - ff".format(hex_color))
 
         # if the color is not a string, try and convert it
         else:
