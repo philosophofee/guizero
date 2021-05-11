@@ -153,7 +153,17 @@ class PushButton(TextWidget):
         # clear any existing image from the button
         self._clear_image()
         self._text.set(str(value))
-        
+
+    # Get the border width on the button
+    @property
+    def borderwidth(self):
+        return self._get_tk_config("borderwidth", False)
+
+    # Set the border width on the button
+    @borderwidth.setter
+    def borderwidth(self, value):
+        self._set_tk_config("borderwidth", value)
+
     @property
     def image(self):
         return None if self._image is None else self._image.image_source
@@ -164,6 +174,7 @@ class PushButton(TextWidget):
         if value is not None:
             self._image_source = value
             self._load_image()    
+
 
     @property
     def description(self):
